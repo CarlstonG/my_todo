@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Header from './components/layout/Header';
 import Todo from './components/Todo';
 import AddTodo from './components/AddTodo';
+import About from './components/pages/About';
 import './App.css';
 import uuid from 'react-uuid';
 
@@ -67,15 +69,23 @@ addTodo = (title) => {
      //onchange is the bind event see dev inspect //catching events from Todo.js and Todoitems.js
   //passing the value of todos to todo
     return (
-      <div className="App">
+      <Router>
+              <div className="App">
           <div className="container">
       <Header/>
-      <AddTodo addTodo={this.addTodo}/>
+      <Route exact path="/" render={props => (
+        <React.Fragment>
+              <AddTodo addTodo={this.addTodo}/>
       
-        <Todo todos={this.state.todos} markComplete={this.markComplete}
-        delTodo={this.delTodo}/>
+              <Todo todos={this.state.todos} markComplete={this.markComplete}
+              delTodo={this.delTodo}/>
+        </React.Fragment>
+      )}/>
+          <Route path="/about" component={About}/>
         </div>
         </div>
+      </Router>
+
     );
   }
 }
